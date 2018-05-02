@@ -31,11 +31,7 @@ body{
 #container{margin: 0 auto;}
 
 #loading{
-    background: #0288d1;
-    background: -webkit-radial-gradient(#377C9A 10%, #193F79 20%, #132F62 60%);
-    background: -o-radial-gradient(#377C9A 10%, #193F79 20%, #132F62 60%);
-    background: -moz-radial-gradient(#377C9A 10%, #193F79 20%, #132F62 60%);
-    background: radial-gradient(#377C9A 10%, #193F79 20%, #132F62 60%);
+    background-color: #140518;
     position: absolute;
     top: 0;
     left: 0;
