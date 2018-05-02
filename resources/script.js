@@ -116,6 +116,8 @@ function get_data_from_json(){
                 i++;
             }
 
+            $("#username").text(json.username);
+            $("#approval").text(json.approval);
             $("#rank").text(json.rank);
             $("#productivity").text(json.productivity);
             $("#producedBlocks").text(json.producedblocks);
@@ -179,6 +181,8 @@ function get_delegate_data(){
         dataType: 'json',
         success: function (data) { 
                 $("#rank").text(data.delegate.rate);
+                $("#username").text(data.delegate.username);
+                $("#approval").text(data.delegate.approval);
                 $("#productivity").text(data.delegate.productivity);
                 $("#producedBlocks").text(data.delegate.producedblocks);
                 $("#missedBlocks").text(data.delegate.missedblocks);
