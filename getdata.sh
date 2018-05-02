@@ -43,11 +43,15 @@ jq -r '.servers|keys[]' $CONFIG | while read key ; do
     FORGING=$(curl -s -k $HTTP://$IP:$PORT/api/delegates/forging/status?publicKey=$PUBLICKEY | jq '.enabled')
     if [ "$FORGING" == "true" ]; then
         RESPONSE=$(curl -s -k $HTTP://$IP:$PORT/api/delegates/get?publicKey=$PUBLICKEY)
+		USERNAME=$(echo $RESPONSE | jq '.delegate.username')
+		APPROVAL=$(echo $RESPONSE | jq '.delegate.approval')
         RANK=$(echo $RESPONSE | jq '.delegate.rate')
         PRODUCTIVITY=$(echo $RESPONSE | jq '.delegate.productivity')
         PRODUCEDBLOCKS=$(echo $RESPONSE | jq '.delegate.producedblocks')
         MISSEDBLOCKS=$(echo $RESPONSE | jq '.delegate.missedblocks')
         echo "  \"rank\": \"$RANK\"," > tmp.file
+		echo "  \"username\": \"$USERNAME\"," >> tmp.file
+		echo "  \"approval\": \"$APPROVAL\"," >> tmp.file
         echo "  \"productivity\": \"$PRODUCTIVITY\"," >> tmp.file
         echo "  \"producedblocks\": \"$PRODUCEDBLOCKS\"," >> tmp.file
         echo "  \"missedblocks\": \"$MISSEDBLOCKS\"," >> tmp.file
