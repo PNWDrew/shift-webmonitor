@@ -147,7 +147,7 @@ function get_nextturn(){
             if(data.success){
                 for (var dd in data.delegates) {
                     if(data.delegates[dd] == g_publicKey ){
-                        timeg = dd * 10;
+                        timeg = dd * 27;
                         time = (timeg/60);
                         minutes = Math.floor(timeg / 60);
                         seconds = Math.round((time - minutes) * 60);
