@@ -1,32 +1,38 @@
 {
-  "name": "mrgr",
-  "address": "3125853987625788223L",
-  "serverip": "123.123.123.123",
+  "m_name": "mx", // Mainnet delegate name
+  "t_name": "m",  // Testnet delegate name
+  "m_publicKey": "a755f6838f2bf5e593f2e8069ad91927dfd1659e1ba4d80c0c6adadeb553620c", // Mainnet publicKey
+  "t_publicKey": "8668b26c0bb1a40eaccdc1a22db17a79ddab35feb8d1eb2b75765cda902b0c1e", // Testnet publicKey
+  "serverip": "111.111.111.111",
   "serverport": "9100",
   "servers": {
     "server1": {
-      "name": "Main",
+      "name": "tMaster",
       "http": "http",
-      "ip": "123.123.123.123",
-      "port": "8000"
+      "ip": "111.111.111.111",
+      "port": "9405",
+	  "testnet": true //true if Testnet Node
     },
     "server2": {
-      "name": "Backup 1",
+      "name": "tSlave",
       "http": "http",
-      "ip": "124.124.124.124",
-      "port": "8000"
+      "ip": "222.222.222.222",
+      "port": "9405",
+	  "testnet": true
     },
     "server3": {
-      "name": "Backup 2",
+      "name": "mMaster",
       "http": "http",
-      "ip": "125.125.125.125",
-      "port": "8000"
+      "ip": "333.333.333.333",
+      "port": "9305",
+	  "testnet": false //false if Mainnet Node
     },
-    "server4": {
-      "name": "Backup 3",
+	  "server4": {
+      "name": "mSlave",
       "http": "http",
-      "ip": "126.126.126.126",
-      "port": "8000"
+      "ip": "333.333.333.333",
+      "port": "9305",
+	  "testnet": false
     }
   }
 }
