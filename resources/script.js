@@ -282,7 +282,7 @@ function get_server_data(server,http,ip,port,testnet){
         dataType: 'json',
         success: function (data) { 
             if(data.syncing){
-                $("#server"+server+"_height").html(data.height + " <span><img src='resources/syncing.gif'></span>");
+                $("#server"+server+"_height").html(data.height + " <span><img src='resources/syncing.gif' width='16px' height='16px'></span>");
             }else{$("#server"+server+"_height").html(data.height);}
             $("#server"+server+"_consensus").text(data.consensus+"% ");
 
@@ -346,7 +346,7 @@ function get_forging_status(server,http,ip,port,testnet){
         dataType: 'json',
         success: function (data) { 
                 if(data.enabled){
-                    $("#server"+server+"_forging").html("<img src='resources/icon_4.png'>");
+                    $("#server"+server+"_forging").html("<img src='resources/logo.png' width='16px' height='16px'>");
                     if(testnet){
                        t_forging=true; 
                     } else { m_forging=true; }
@@ -419,7 +419,7 @@ function notifyMe(s_message) {
     Notification.requestPermission();
   else {
       var notification = new Notification(s_message, {
-          icon: 'resources/icon_3.png',
+          icon: 'resources/logo.png',
           body: 'Click here to go to the monitor',
         });
 
