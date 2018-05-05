@@ -16,11 +16,11 @@
 <body>
 <div class="row" id="container">
         <div class="navbar" id="navbar">
-            <img src="resources/icon_3.png">
+            <img src="resources/logo.png" width="32px" height="32px">
 Shift Monitor
         </div>
     
-   <div class="col-md-6">
+   <div id="Mainnet" class="col-md-6">
         <table id="nodeTable" summary="Shift node monitor" class="table table-striped">
             <thead>
                 <tr>
@@ -39,29 +39,8 @@ Shift Monitor
              <b>Mainnet:</b> Next turn in <span id="m_nextturn">∞</span>
         </div>
        <hr>
-    </div>
-	<div class="col-md-6">
-        <table id="nodeTableT" summary="Shift node monitor" class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Server</th>
-                    <th>Height</th>
-                    <th>Consensus</th>
-                    <th>Forging</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>		
-		<div id="m_dataMessages">
-		</div>
-        <div class="t_nextturn_bar">
-             <b>Testnet:</b> Next turn in <span id="t_nextturn">∞</span>
-        </div>
-       <hr>
-	</div>
-    <div class="col-md-6">
-        <table id="nodeTable" summary="Delegate data" class="table table-striped">
+
+        <table id="nodeTable" summary="Delegate data" class="table table-striped infoTable">
             <tbody>
                 <tr>
                     <td>Username</td>
@@ -90,8 +69,27 @@ Shift Monitor
             </tbody>
         </table>
     </div>
-	<div class="col-md-6">
-        <table id="nodeTable" summary="Delegate data" class="table table-striped">
+	<div id="Testnet" class="col-md-6">
+        <table id="nodeTableT" summary="Shift node monitor" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Server</th>
+                    <th>Height</th>
+                    <th>Consensus</th>
+                    <th>Forging</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>		
+		<div id="m_dataMessages">
+		</div>
+        <div class="t_nextturn_bar">
+             <b>Testnet:</b> Next turn in <span id="t_nextturn">∞</span>
+        </div>
+       <hr>
+
+        <table id="nodeTable" summary="Delegate data" class="table table-striped infoTable" class="infoTable">
             <tbody>
                 <tr>
                     <td>Username</td>
@@ -122,7 +120,7 @@ Shift Monitor
     </div>
 </div>
 <div id="loading" style="background: url('resources/bg.png') no-repeat center center transparent; width: 100%; height: 100%;">
-        <div class="col-md-12" style="background: url('resources/icon_2.png') no-repeat center center transparent; width: 100%; height: 100%;">
+        <div class="col-md-12" style="background: url('resources/logo_bg.png') no-repeat center center transparent; width: 100%; height: 100%;">
             <span id="loadingData">Loading...</span>
         </div>
 </div>
