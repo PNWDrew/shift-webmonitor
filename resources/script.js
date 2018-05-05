@@ -7,6 +7,7 @@ var t_api_ip = "";
 var t_api_port= "";
 
 var g_publicKey = "";
+
 var g_setup = "";
 var g_loader = 0;
 
@@ -15,11 +16,6 @@ var t_forging = false;
 
 var m_notforging = 0;
 var t_notforging = 0;
-
-var g_totalservers = 0;
-var g_checkheight = 0;
-var g_topheight = 0;
-var no_server_online = false;
 
 var no_m_api_online = true;
 var no_t_api_online = true;
@@ -34,21 +30,17 @@ function initialize() {
     $.getJSON("config.json", function(json){
         g_setup = json;
 
-        forger_http = g_setup.servers.server1.http;
-        forger_ip = g_setup.servers.server1.ip;
-        forger_port = g_setup.servers.server1.port;
-
-
             for (var ss in g_setup.servers) {
                 if(no_m_api_online) {  
-                    if(g_setup.servers[ss].testnet == false) {
+                    if(!g_setup.servers[ss].testnet) {
                         m_api_http = g_setup.servers[ss].http;
                         m_api_ip = g_setup.servers[ss].ip;
                         m_api_port= g_setup.servers[ss].port;
                         no_m_api_online = false;
+                        break;
                     }
-        }
-        }   
+                }
+            }   
 
             for (var ss in g_setup.servers) {
                 if(no_t_api_online) {                
@@ -57,16 +49,15 @@ function initialize() {
                         t_api_ip = g_setup.servers[ss].ip;
                         t_api_port= g_setup.servers[ss].port;
                         no_t_api_online = false;
+                        break;
                     }
-        }
-        } 
-
-        g_publicKey = g_setup.t_publicKey;
+                }
+            } 
 
         $("#loadingData").text("Loading config..");
         var i=1;
         for (var ss in g_setup.servers) {
-            if(g_setup.servers[ss].testnet == false) {
+            if(!g_setup.servers[ss].testnet) {
                 var table_row="<tr>"+
                                 "<td id='server"+i+"'>"+ g_setup.servers[ss].name +"</td>"+
                                 "<td id='server"+i+"_height'>undefined</td>"+
@@ -86,6 +77,10 @@ function initialize() {
             }
             i++;
         }
+        if(no_t_api_online){
+            $("#Testnet").addClass("disabled");
+            $("#Mainnet").addClass("alone");
+        }
         $("#loadingData").text("Table loaded..");
         start();
     });
@@ -95,39 +90,50 @@ function start(){
     $("#loadingData").text("Loading publicKey..");
     $.ajax({ 
         type: 'GET', 
-        url: m_api_http +'://'+ m_api_ip +':'+ m_api_port +'/api/loader/status/sync', 
+        url: m_api_http +'://'+ m_api_ip +':'+ m_api_port +'/api/loader/status/sync',
         dataType: 'json',
         success: function (data) {
             if(!data.success){
                 alert("Error, can't retrieve data");   
             } else {
-               $("#loadingData").text("Loading servers data..");
-               setInterval(monitor_process, 27000);
-               setInterval(function() { get_delegate_data(t_api_http,t_api_ip,t_api_port,"t"); }, 27000);
-               setInterval(function() { get_delegate_data(m_api_http,m_api_ip,m_api_port,"m"); }, 27000);
+                $("#loadingData").text("Loading servers data..");
+                monitor_process();
+                if(!no_t_api_online){
+                    get_delegate_data(t_api_http,t_api_ip,t_api_port,"t");
+                }
+                get_delegate_data(m_api_http,m_api_ip,m_api_port,"m");
+
+                setInterval(monitor_process, 27000);
+                if(!no_t_api_online){
+                    setInterval(function() { get_delegate_data(t_api_http,t_api_ip,t_api_port,"t"); }, 600000);
+                }
+                setInterval(function() { get_delegate_data(m_api_http,m_api_ip,m_api_port,"m"); }, 600000);
 
             }
         },
         error: function (request, status, error) {
              if(typeof request.responseText == "undefined") {
-                    $("#loadingData").text("This ip don't have access to " + m_api_http +"://"+  m_api_ip +":"+  m_api_port + " server. Trying alternative source.");
-                    no_m_api_online = true;
-                    setInterval(monitor_process, 27000);
-                    setInterval(get_delegate_data, 27000);               
+                    $("#loadingData").text("This ip don't have access to " + m_api_http +"://"+  m_api_ip +":"+  m_api_port + " server. Trying alternative source."); 
             }else {           
                 var r = jQuery.parseJSON(request.responseText);
                 if(r.error == "API access denied"){
                     $("#loadingData").text("This ip don't have access to APIs of " +  m_api_http +"://"+  m_api_ip +":"+  m_api_port + " server. Trying alternative source.");
-                    no_m_api_online = true;
-                    setInterval(monitor_process, 27000);
-                    setInterval(get_delegate_data, 27000);
-                }else{$("#loadingData").text(request.responseText);
-                $("#loadingData").text("This ip don't have access to " +  m_api_http +"://"+  m_api_ip +":"+  m_api_port + " server. Trying alternative source.");
-                    no_m_api_online = true;
-                    setInterval(monitor_process, 27000);
-                    setInterval(get_delegate_data, 27000);
+                }else{
+                    $("#loadingData").text("This ip don't have access to " +  m_api_http +"://"+  m_api_ip +":"+  m_api_port + " server. Trying alternative source.");
+                }
             }
-            }
+                no_m_api_online = true;
+                monitor_process();
+                if(!no_t_api_online){
+                    get_delegate_data(t_api_http,t_api_ip,t_api_port,"t");
+                }
+                get_delegate_data(m_api_http,m_api_ip,m_api_port,"m");
+
+                setInterval(monitor_process, 27000);
+                if(!no_t_api_online){
+                    setInterval(function() { get_delegate_data(t_api_http,t_api_ip,t_api_port,"t"); }, 600000);
+                }
+                setInterval(function() { get_delegate_data(m_api_http,m_api_ip,m_api_port,"m"); }, 600000);
         }
     });
 }
@@ -148,10 +154,11 @@ function monitor_process(){
           i++;
         }
         get_nextturn(m_api_http,m_api_ip,m_api_port,"m")
-        get_nextturn(t_api_http,t_api_ip,t_api_port,"t")
-        are_you_forging();
-        g_forging=false;
+        if(!no_t_api_online){
+            get_nextturn(t_api_http,t_api_ip,t_api_port,"t")
+        }   
 
+        are_you_forging();
         m_forging=false;
         t_forging=false;
 }
@@ -189,29 +196,25 @@ function get_nextturn(http,ip,port,net){
                             v_nextturn = minutes + "min "+ seconds + "sec";
                             $("." + net + "_nextturn_bar").removeClass("forgingTime").addClass("usual");
                         }
-                        $("#" + net + "_nextturn").text(v_nextturn);    
-
-
-                                                                      
+                        $("#" + net + "_nextturn").text(v_nextturn); 
+                        break;                                                                   
                     }
                 }
             }
         },
         error: function (request, status, error) {
-             if(typeof request.responseText == "undefined") {
-                $("#dataMessages").text("This ip don't have access to " + http +"://"+ ip +":"+ port + " server");
-                $("#dataMessages").delay(700).fadeIn(500);
-                setTimeout($("#dataMessages").delay(500).fadeOut(500),4000);
-             
+            if(typeof request.responseText == "undefined") {
+                $("#" + net + "_nextturn").text("This ip don't have access to server");     
             }else {           
                 var r = jQuery.parseJSON(request.responseText);
                 if(r.error == "API access denied"){
-                    $("#dataMessages").text("This ip don't have access to APIs of " + http +"://"+ ip +":"+ port + " server");
-                    $("#dataMessages").delay(700).fadeIn(500);
-                    setTimeout($("#dataMessages").delay(500).fadeOut(500),4000);
-                }else{$("#loadingData").text(request.responseText);}
-                no_server_online = true;
+                    $("#" + net + "_nextturn").text("This ip don't have access to server APIs");
+                }else{$("#" + net + "_nextturn").text(request.responseText);}
             }
+            $("." + net + "_nextturn_bar").removeClass("usual").addClass("red");
+            if(net == "m") {
+                no_m_api_online = true;
+            }else{ no_t_api_online = true; }
         }
     }).responseText;
 }
@@ -374,7 +377,7 @@ function are_you_forging(){
     if(!m_forging){
         m_notforging++;
         if(m_notforging > 1){
-            notifyMe("Mainet are not forging!!");
+            notifyMe("Mainet are not forging!");
             $("#m_dataMessages").text("Mainet are not forging!"); 
             $(".m_nextturn_bar").removeClass("usual").addClass("red");         
             navigator.vibrate([500, 250, 500, 250, 500, 250, 500, 250, 500, 250, 500]);
@@ -388,9 +391,9 @@ function are_you_forging(){
     if(!t_forging){
         t_notforging++;
         if(t_notforging > 1){
-            notifyMe("Testnet are not forging!!");
-            $("#t_dataMessages").text("Testnet are not forging!!");
-            $(".m_nextturn_bar").removeClass("usual").addClass("red");        
+            notifyMe("Testnet are not forging!");
+            $("#t_dataMessages").text("Testnet are not forging!");
+            $(".t_nextturn_bar").removeClass("usual").addClass("red");        
             navigator.vibrate([500, 250, 500, 250, 500, 250, 500, 250, 500, 250, 500]);
         }
     }else {
