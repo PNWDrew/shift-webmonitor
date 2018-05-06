@@ -36,6 +36,8 @@ You need to edit **config.json** file with all your proper data. You can use it 
 >  "port" **// Your server's Shift port;**
       
 >  "testnet" **// 'true' for Testnet servers, 'false' for Mainnet servers;**
+
+<br>
  
 After you finish and save your changes from **config.json**, 
 
@@ -64,6 +66,16 @@ For using with Chromium based browsers you should use a secure **https** connect
 >  "key" **// your SSL private key;**
   
 >  "cert" **// your SSL certificate;**
+
+<br>
+
+Or you can start your Chromium based browser with this key:
+
+```
+--user-data-dir=/tmp/foo --unsafely-treat-insecure-origin-as-secure=http://serverip:serverport/
+```
+
+But anyway notifications are not supported by Chromium based Mobile browsers.
 
 ### Output example
 
