@@ -19,14 +19,14 @@
       "http": "http",
       "ip": "111.111.111.111",
       "port": "9405",
-	  "testnet": true
+      "testnet": true
     },
     "server2": {
       "name": "tSlave",
       "http": "http",
       "ip": "222.222.222.222",
       "port": "9405",
-	  "testnet": true
+      "testnet": true
     },
     "server3": {
       "name": "mMaster",
@@ -35,12 +35,12 @@
       "port": "9305",
 	  "testnet": false
     },
-	  "server4": {
+    "server4": {
       "name": "mSlave",
       "http": "http",
       "ip": "333.333.333.333",
       "port": "9305",
-	  "testnet": false
+      "testnet": false
     }
   }
 }
