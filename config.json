@@ -6,7 +6,7 @@
   "serverip": "111.111.111.111",
   "serverport": "9100",
   "ssl": {
-    "enabled": true,
+    "enabled": false,
     "options": {
     "port": "9191",
     "key": "/etc/letsencrypt/live/shifter.com/privkey.pem",
