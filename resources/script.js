@@ -8,7 +8,10 @@ var t_api_port= "";
 
 var g_publicKey = "";
 
-var g_setup = "";
+var m_lastBlock = 0;
+var t_lastBlock = 0;
+
+var gsetup = "";
 var g_loader = 0;
 
 var m_forging = false;
@@ -22,7 +25,6 @@ var no_t_api_online = true;
 
 $(document).ready(function() {      
     $("#container").hide();
-    $("#loading").show();
     initialize();
 });    
 
@@ -153,6 +155,12 @@ function monitor_process(){
           get_forging_status(i,g_setup.servers[ss].http,g_setup.servers[ss].ip,g_setup.servers[ss].port,g_setup.servers[ss].testnet);
           i++;
         }
+
+        get_last_block(m_api_http,m_api_ip,m_api_port,"m")
+        if(!no_t_api_online){
+            get_last_block(t_api_http,t_api_ip,t_api_port,"t")
+        }
+
         get_nextturn(m_api_http,m_api_ip,m_api_port,"m")
         if(!no_t_api_online){
             get_nextturn(t_api_http,t_api_ip,t_api_port,"t")
@@ -163,6 +171,62 @@ function monitor_process(){
         t_forging=false;
 }
 
+function get_last_block(http,ip,port,net) {
+
+    if(net == "m") {
+        g_publicKey = g_setup.m_publicKey;
+    }else{ g_publicKey = g_setup.t_publicKey; }
+
+    $("#loadingData").text("Loading LastBlock..");
+    return $.ajax({ 
+        type: 'GET', 
+        url: http +'://'+ ip +':'+ port +'/api/blocks', 
+        data: { generatorPublicKey : g_publicKey },
+        async: false,
+        dataType: 'json',
+        success: function (data) { 
+            var last_forged_block = data.blocks["0"].height;
+            var lastBlock = "";
+
+            if(net == "m") {
+                lastBlock = m_lastBlock;
+            }else{ lastBlock = t_lastBlock; }
+
+            time = ((lastBlock - last_forged_block) * 27);
+            minutes = Math.floor(time / 60);
+            seconds = Math.round(time - (minutes * 60));
+            hours = Math.floor(minutes / 60);
+
+            var f_lastBlock="";
+          
+            if(minutes >= 60){
+                min = Math.floor(minutes - (hours * 60));
+                if(minutes >= 120){
+                    if(minutes == 120){
+                        f_lastBlock = hours + "hours";
+                    } else{ f_lastBlock = hours + " hours " + min + " min"; }    
+                }
+                if(minutes == 60){
+                    f_lastBlock = hours + " hour";
+                } else{ f_lastBlock = hours + " hour " + min + " min"; }
+            } 
+            if(minutes == 0){ 
+                f_lastBlock =  seconds + " sec"; 
+            } else{ f_lastBlock = minutes + " min " + seconds + " sec"; }
+
+            if(minutes < 45 ){
+                $("." + net + "_lastBlock").removeClass("usual").addClass("forgingTime");
+            }
+            if(minutes > 45 ){
+                $("." + net + "_lastBlock").removeClass("forgingTime").addClass("usual");
+            }   
+            if(minutes > 90 ){
+                $("." + net + "_lastBlock").removeClass("forgingTime").removeClass("usual").addClass("red");
+            }                       
+            $("#" + net + "_lastBlock").text(f_lastBlock);     
+        }
+    }).responseText;
+}
 
 function get_nextturn(http,ip,port,net){
 
@@ -170,7 +234,7 @@ function get_nextturn(http,ip,port,net){
         g_publicKey = g_setup.m_publicKey;
     }else{ g_publicKey = g_setup.t_publicKey; }
 
-    $("#loadingData").text("Loading NextTurn..");
+    $("#loadingData").text("Loading NextTurns..");
     return $.ajax({ 
         type: 'GET', 
         url: http +'://'+ ip +':'+ port +'/api/delegates/getNextForgers', 
@@ -187,14 +251,14 @@ function get_nextturn(http,ip,port,net){
                         seconds = Math.round((time - minutes) * 60);
                         var v_nextturn="";
                         if(minutes == 0){ 
-                            v_nextturn = timeg +"sec"; 
+                            v_nextturn = timeg +" sec"; 
                             if(timeg < 30 ){
-                                $("." + net + "_nextturn_bar").removeClass("usual").addClass("forgingTime");
+                                $("." + net + "_nextturn_bar").removeClass("usual").removeClass("red").addClass("forgingTime");
                         }
                     }
                         else{ 
-                            v_nextturn = minutes + "min "+ seconds + "sec";
-                            $("." + net + "_nextturn_bar").removeClass("forgingTime").addClass("usual");
+                            v_nextturn = minutes + " min "+ seconds + " sec";
+                            $("." + net + "_nextturn_bar").removeClass("forgingTime").removeClass("red").addClass("usual");
                         }
                         $("#" + net + "_nextturn").text(v_nextturn); 
                         break;                                                                   
@@ -220,7 +284,7 @@ function get_nextturn(http,ip,port,net){
 }
 
 function get_delegate_data(http,ip,port,net){
-    $("#loadingData").text("Loading delegate data..");
+    $("#loadingData").text("Loading delegates data..");
 
     if(net == "m") {
         g_publicKey = g_setup.m_publicKey;
@@ -293,24 +357,26 @@ function get_server_data(server,http,ip,port,testnet){
                 t_api_port=port;
                 no_t_api_online = false;
                 }
+                t_lastBlock = data.height;
             } else {
                 if(no_m_api_online) {
-                m_api_http=http;
-                m_api_ip=ip;
-                m_api_port=port;
-                no_m_api_online = false;
-             }
+                    m_api_http=http;
+                    m_api_ip=ip;
+                    m_api_port=port;
+                    no_m_api_online = false;
+                }
+                m_lastBlock = data.height;
             }
 
             if(!data.success) {
                if(data.error == "API access denied"){
-                $("#server"+server+"_height").html("API access denied");
-                $("#server"+server+"_consensus").text("API access denied");
-            } else {
-                $("#server"+server+"_height").html("undefined");
-                $("#server"+server+"_consensus").text("undefined");      
+                    $("#server"+server+"_height").html("API access denied");
+                    $("#server"+server+"_consensus").text("API access denied");
+                } else {
+                    $("#server"+server+"_height").html("undefined");
+                    $("#server"+server+"_consensus").text("undefined");      
+                }   
             }
-        }
         },
         error: function (request, status, error) {
             if(typeof request.responseText == "undefined") {
@@ -325,10 +391,10 @@ function get_server_data(server,http,ip,port,testnet){
                     $("#server"+server+"_height").html("undefined");
                     $("#server"+server+"_consensus").text("undefined");      
                 }
-        }
-
-
             }
+
+
+        }
 
     }).responseText;
 }
@@ -377,9 +443,9 @@ function are_you_forging(){
     if(!m_forging){
         m_notforging++;
         if(m_notforging > 1){
-            notifyMe("Mainet are not forging!");
             $("#m_dataMessages").text("Mainet are not forging!"); 
-            $(".m_nextturn_bar").removeClass("usual").addClass("red");         
+            $(".m_nextturn_bar").removeClass("usual").addClass("red");
+            notifyMe("Mainet are not forging!");         
             navigator.vibrate([500, 250, 500, 250, 500, 250, 500, 250, 500, 250, 500]);
         }
     }else {
@@ -391,9 +457,9 @@ function are_you_forging(){
     if(!t_forging){
         t_notforging++;
         if(t_notforging > 1){
-            notifyMe("Testnet are not forging!");
             $("#t_dataMessages").text("Testnet are not forging!");
-            $(".t_nextturn_bar").removeClass("usual").addClass("red");        
+            $(".t_nextturn_bar").removeClass("usual").addClass("red");
+            notifyMe("Testnet are not forging!");        
             navigator.vibrate([500, 250, 500, 250, 500, 250, 500, 250, 500, 250, 500]);
         }
     }else {
