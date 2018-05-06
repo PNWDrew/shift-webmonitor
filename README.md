@@ -1,17 +1,15 @@
 # Shift Monitor
 Tool to watch your servers status. Height, Consensus and Forging status. Next turn and last forged block time.
 
-<br>
-
 ## Requisites
 
-* You need to have Shift installed;
-* Install this script only in one server and make sure you whitelist your IP in all servers;
-* You need to have [fs, http, https, node-cmd, path] installed in npm, for example: npm install node-cmd;
-* Make sure to add your new serverport numbers to your firewall. [ShiftProject Wiki](https://www.reddit.com/r/ShiftProject/wiki/guides/delegate#wiki_step_seven_.2014_set_up_a_basic_firewall);
+* You need to have **Shift** installed;
+* Install this script only in one server and make sure you **whitelist your IP** in all servers;
+* You need to have **fs, http, https, node-cmd, path** installed in npm, for example: `npm install node-cmd`;
+* Make sure to add your new serverport numbers to your firewall. Instructions: [ShiftProject Wiki](https://www.reddit.com/r/ShiftProject/wiki/guides/delegate#wiki_step_seven_.2014_set_up_a_basic_firewall);
 
 ## Installation
-You need to edit config.json file with all your proper data. The structure is as follows:
+You need to edit **config.json** file with all your proper data. You can use it for Mainnet and Testnet both or only for Mainnet.
 
 > "m_name" **// Mainnet delagate username;**
 
@@ -27,27 +25,33 @@ You need to edit config.json file with all your proper data. The structure is as
 
 >  "servers" **// It's an array of all the servers you will monitor.**
 
->  "server1"
+>  "server1" **// Server number;**
 
->  "name"
+>  "name" **// Your server's name;**
 
->  "http"
+>  "http" **// Your server's connection;**
       
->  "ip"
-      
->  "port"
+>  "ip" **// Your server's ip or domain;**
+       
+>  "port" **// Your server's Shift port;**
       
 >  "testnet" **// 'true' for Testnet servers, 'false' for Mainnet servers;**
  
 After you finish and save your changes from **config.json**, 
-run in a background process (you can use screen): 
+
+Run in a background process (you can use screen):
+
+`screen`
+
 `node webserver.js`
 
-<i>node webserver.js</i> will start a web server which you can access with http://serverip:serverport/ from a web browser like Chrome.<br>
-If you access from a device that you have in your servers whitelist, you will be able to obtain almost realtime data.<br>
-If you access from a device that is no in your servers whitelist, you will obtain the data with a delay of 20 seconds maximum.<br><br>
+**node webserver.js** will start a web server which you can access with http://serverip:serverport/ from a web browser like Firefox.
 
-Optimum method of use. If you are in your office or home computer whitelist that IP's and open chrome on your server's address, you will not need to check everytime how your servers are performing, chrome will alert you if none of your servers are forging. When the page load is complete you will recieve a first alert to test and for you to see how it works.<br><br>
+If you access from a device that you have in your servers whitelist, you will be able to obtain almost realtime data.
+
+**Browser notifications are works perfectly with Firefox Desktop and Mobile browsers.**
+
+For using with Chromium based browsers you should use a secure **https** connection for recieving notifications. You can enabled it in **config.json**:
 
 >  "ssl": {
 
