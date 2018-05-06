@@ -5,7 +5,7 @@ Tool to watch your servers status. Height, Consensus and Forging status. Next tu
 
 * You need to have **Shift** installed;
 * Install this script only in one server and make sure you **whitelist your IP** in all servers;
-* You need to have **fs, http, https, node-cmd, path** installed in npm, for example: `npm install node-cmd`;
+* You need to have **fs, http, https, node-cmd, path** installed in npm, for example: `sudo npm install node-cmd`;
 * Make sure to add your new serverport numbers to your firewall. Instructions: [ShiftProject Wiki](https://www.reddit.com/r/ShiftProject/wiki/guides/delegate#wiki_step_seven_.2014_set_up_a_basic_firewall);
 
 ## Installation
@@ -39,7 +39,7 @@ You need to edit **config.json** file with all your proper data. You can use it 
  
 After you finish and save your changes from **config.json**, 
 
-Run in a background process (you can use screen):
+Run in a background process. You can use **screen**:
 
 `screen`
 
