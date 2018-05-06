@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Shift Monitor">
     <meta name="author" content="mrgr">
+	<meta name="fork" content="mx">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -14,13 +15,20 @@
 <title>Shift Monitor</title>
 </head>
 <body>
+<div id="loading">
+		<div class="loadingData"><span id="loadingData">Loading...</span></div>
+        <div class="logoBg"></div>
+</div>
 <div class="row" id="container">
         <div class="navbar" id="navbar">
             <img src="resources/logo.png" width="32px" height="32px">
 Shift Monitor
         </div>
+		
+	<div class="progressbar"></div>
     
    <div id="Mainnet" class="col-md-6">
+   <div class="Net">Mainnet</div>
         <table id="nodeTable" summary="Shift node monitor" class="table table-striped">
             <thead>
                 <tr>
@@ -35,8 +43,11 @@ Shift Monitor
         </table>
 		<div id="m_dataMessages">
 		</div>
+        <div class="m_lastBlock">
+             Last block forged <b><span id="m_lastBlock">∞</span></b> ago
+        </div>		
         <div class="m_nextturn_bar">
-             <b>Mainnet:</b> Next turn in <span id="m_nextturn">∞</span>
+             Next turn in <b><span id="m_nextturn">∞</span></b>
         </div>
        <hr>
 
@@ -70,6 +81,7 @@ Shift Monitor
         </table>
     </div>
 	<div id="Testnet" class="col-md-6">
+	<div class="Net">Testnet</div>
         <table id="nodeTableT" summary="Shift node monitor" class="table table-striped">
             <thead>
                 <tr>
@@ -82,10 +94,13 @@ Shift Monitor
             <tbody>
             </tbody>
         </table>		
-		<div id="m_dataMessages">
+		<div id="t_dataMessages">
 		</div>
+        <div class="t_lastBlock">
+             Last block forged <b><span id="t_lastBlock">∞</span></b> ago
+        </div>			
         <div class="t_nextturn_bar">
-             <b>Testnet:</b> Next turn in <span id="t_nextturn">∞</span>
+             Next turn in <b><span id="t_nextturn">∞</span></b>
         </div>
        <hr>
 
@@ -118,11 +133,6 @@ Shift Monitor
             </tbody>
         </table>
     </div>
-</div>
-<div id="loading" style="background: url('resources/bg.png') no-repeat center center transparent; width: 100%; height: 100%;">
-        <div class="col-md-12" style="background: url('resources/logo_bg.png') no-repeat center center transparent; width: 100%; height: 100%;">
-            <span id="loadingData">Loading...</span>
-        </div>
 </div>
 <script src="resources/script.js" type="application/javascript"></script>
 </body>
