@@ -75,7 +75,7 @@ Or you can start your Chromium based browser with this key:
 --user-data-dir=/tmp/foo --unsafely-treat-insecure-origin-as-secure=http://serverip:serverport/
 ```
 
-But anyway notifications are not supported by Chromium based Mobile browsers.
+*Notifications are not supported by Chromium based Mobile browsers.*
 
 ### Output example
 
