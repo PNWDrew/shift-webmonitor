@@ -212,6 +212,10 @@ function get_last_block(http,ip,port,net) {
             } 
             if(minutes == 0){ 
                 f_lastBlock =  seconds + " sec"; 
+            } 
+            if(time < 0){
+                f_lastBlock = "0 sec";
+
             } else{ f_lastBlock = minutes + " min " + seconds + " sec"; }
 
             if(minutes < 45 ){
@@ -357,26 +361,27 @@ function get_server_data(server,http,ip,port,testnet){
                 t_api_port=port;
                 no_t_api_online = false;
                 }
-                t_lastBlock = data.height;
+                if(t_lastBlock < data.height){ t_lastBlock = data.height; }
+                
             } else {
                 if(no_m_api_online) {
-                    m_api_http=http;
-                    m_api_ip=ip;
-                    m_api_port=port;
-                    no_m_api_online = false;
+                m_api_http=http;
+                m_api_ip=ip;
+                m_api_port=port;
+                no_m_api_online = false;
                 }
-                m_lastBlock = data.height;
+                if(m_lastBlock < data.height){ m_lastBlock = data.height; }
             }
 
             if(!data.success) {
                if(data.error == "API access denied"){
-                    $("#server"+server+"_height").html("API access denied");
-                    $("#server"+server+"_consensus").text("API access denied");
-                } else {
-                    $("#server"+server+"_height").html("undefined");
-                    $("#server"+server+"_consensus").text("undefined");      
-                }   
+                $("#server"+server+"_height").html("API access denied");
+                $("#server"+server+"_consensus").text("API access denied");
+            } else {
+                $("#server"+server+"_height").html("undefined");
+                $("#server"+server+"_consensus").text("undefined");      
             }
+        }
         },
         error: function (request, status, error) {
             if(typeof request.responseText == "undefined") {
@@ -391,10 +396,10 @@ function get_server_data(server,http,ip,port,testnet){
                     $("#server"+server+"_height").html("undefined");
                     $("#server"+server+"_consensus").text("undefined");      
                 }
-            }
-
-
         }
+
+
+            }
 
     }).responseText;
 }
