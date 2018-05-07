@@ -52,7 +52,7 @@ Run in a background process. You can use **screen**:
 
 If you access from a device that you have in your servers whitelist, you will be able to obtain almost realtime data.
 
-### Browser notifications are works perfectly with Firefox Desktop and Mobile browsers.
+#### Browser notifications are works perfectly with Firefox Desktop and Mobile browsers.
 
 ### Chromium based browsers
 For using with Chromium based browsers you should use a secure **https** connection for recieving notifications. You can enabled it in **config.json**:
