@@ -259,8 +259,7 @@ function get_nextturn(http,ip,port,net){
                             if(timeg < 30 ){
                                 $("." + net + "_nextturn_bar").removeClass("usual").removeClass("red").addClass("forgingTime");
                         }
-                    }
-                        else{ 
+                    } else{ 
                             v_nextturn = minutes + " min "+ seconds + " sec";
                             $("." + net + "_nextturn_bar").removeClass("forgingTime").removeClass("red").addClass("usual");
                         }
@@ -310,12 +309,12 @@ function get_delegate_data(http,ip,port,net){
         },
         error: function (request, status, error) {
              if(typeof request.responseText == "undefined") {
-                    $("#" + net + "_rank").text("404");
-                    $("#" + net + "_username").text("404");
-                    $("#" + net + "_approval").text("404");
-                    $("#" + net + "_productivity").text("404");
-                    $("#" + net + "_producedBlocks").text("404");
-                    $("#" + net + "_missedBlocks").text("404");
+                    $("#" + net + "_rank").text("Server Error");
+                    $("#" + net + "_username").text("Server Error");
+                    $("#" + net + "_approval").text("Server Error");
+                    $("#" + net + "_productivity").text("Server Error");
+                    $("#" + net + "_producedBlocks").text("Server Error");
+                    $("#" + net + "_missedBlocks").text("Server Error");
                     if(g_loader == 0) display_data();
             }else {              
                 var r = jQuery.parseJSON(request.responseText);
@@ -360,6 +359,7 @@ function get_server_data(server,http,ip,port,testnet){
                 t_api_ip=ip;
                 t_api_port=port;
                 no_t_api_online = false;
+                get_delegate_data(t_api_http,t_api_ip,t_api_port,"t");
                 }
                 if(t_lastBlock < data.height){ t_lastBlock = data.height; }
                 
@@ -369,6 +369,7 @@ function get_server_data(server,http,ip,port,testnet){
                 m_api_ip=ip;
                 m_api_port=port;
                 no_m_api_online = false;
+                get_delegate_data(m_api_http,m_api_ip,m_api_port,"m");
                 }
                 if(m_lastBlock < data.height){ m_lastBlock = data.height; }
             }
@@ -385,8 +386,8 @@ function get_server_data(server,http,ip,port,testnet){
         },
         error: function (request, status, error) {
             if(typeof request.responseText == "undefined") {
-                $("#server"+server+"_height").html("404");
-                $("#server"+server+"_consensus").text("404");               
+                $("#server"+server+"_height").html("Server Error");
+                $("#server"+server+"_consensus").text("Server Error");               
             }else {
                 var r = jQuery.parseJSON(request.responseText);
                 if(r.error == "API access denied"){
@@ -433,7 +434,7 @@ function get_forging_status(server,http,ip,port,testnet){
         },
         error: function (request, status, error) {
             if(typeof request.responseText == "undefined") {
-                $("#server"+server+"_forging").html("404");              
+                $("#server"+server+"_forging").html("Server Error");              
             }else {            
                 var r = jQuery.parseJSON(request.responseText);
                 if(r.error == "API access denied"){
