@@ -3,7 +3,6 @@ Tool to watch your servers status. Height, Consensus and Forging status. Next tu
 
 ## Requisites
 
-* You need to have **Shift** installed;
 * You can install this script on your server or **upload it to any web hosting including Phantom**;
 * Make sure you **whitelist all your IPs** in API and Forging sections of Shift *config.json* in all servers;
 * You need to have **fs, http, https, node-cmd, path** installed in npm, for example: `sudo npm install node-cmd`;
