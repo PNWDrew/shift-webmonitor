@@ -23,6 +23,8 @@ var t_notforging = 0;
 var no_m_api_online = true;
 var no_t_api_online = true;
 
+var without_testnet = false;
+
 $(document).ready(function() {      
     $("#container").hide();
     initialize();
@@ -82,6 +84,7 @@ function initialize() {
         if(no_t_api_online){
             $("#Testnet").addClass("disabled");
             $("#Mainnet").addClass("alone");
+            without_testnet = true;
         }
         $("#loadingData").text("Table loaded..");
         start();
@@ -198,6 +201,11 @@ function get_last_block(http,ip,port,net) {
             hours = Math.floor(minutes / 60);
 
             var f_lastBlock="";
+  
+            if(time < 0){
+                f_lastBlock = "0 sec";
+
+            } else{ f_lastBlock = minutes + " min " + seconds + " sec"; }
           
             if(minutes >= 60){
                 min = Math.floor(minutes - (hours * 60));
@@ -210,13 +218,10 @@ function get_last_block(http,ip,port,net) {
                     f_lastBlock = hours + " hour";
                 } else{ f_lastBlock = hours + " hour " + min + " min"; }
             } 
+
             if(minutes == 0){ 
                 f_lastBlock =  seconds + " sec"; 
             } 
-            if(time < 0){
-                f_lastBlock = "0 sec";
-
-            } else{ f_lastBlock = minutes + " min " + seconds + " sec"; }
 
             if(minutes < 45 ){
                 $("." + net + "_lastBlock").removeClass("usual").addClass("forgingTime");
@@ -259,7 +264,7 @@ function get_nextturn(http,ip,port,net){
                             if(timeg < 30 ){
                                 $("." + net + "_nextturn_bar").removeClass("usual").removeClass("red").addClass("forgingTime");
                         }
-                    } else{ 
+                        } else{ 
                             v_nextturn = minutes + " min "+ seconds + " sec";
                             $("." + net + "_nextturn_bar").removeClass("forgingTime").removeClass("red").addClass("usual");
                         }
@@ -459,19 +464,21 @@ function are_you_forging(){
         $("#m_dataMessages").text("");
     }
     
-
-    if(!t_forging){
-        t_notforging++;
-        if(t_notforging > 1){
-            $("#t_dataMessages").text("Testnet are not forging!");
-            $(".t_nextturn_bar").removeClass("usual").addClass("red");
-            notifyMe("Testnet are not forging!");        
-            navigator.vibrate([500, 250, 500, 250, 500, 250, 500, 250, 500, 250, 500]);
-        }
-    }else {
+    if(!without_testnet){
+        if(!t_forging){
+            t_notforging++;
+            if(t_notforging > 1){
+                $("#t_dataMessages").text("Testnet are not forging!");
+                $(".t_nextturn_bar").removeClass("usual").addClass("red");
+                notifyMe("Testnet are not forging!");        
+                navigator.vibrate([500, 250, 500, 250, 500, 250, 500, 250, 500, 250, 500]);
+            }
+        }else {
         t_notforging=0;
         $("#t_dataMessages").text("");
+        }
     }
+
         
 }
     
