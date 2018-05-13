@@ -1,11 +1,11 @@
-# Shift Monitor
+# Shift Webmonitor
 Tool to watch your servers status. Height, Consensus and Forging status. Next turn and last forged block time.
 
 ## Requisites
 
 * You need to have **Shift** installed;
-* Install this script only in one server;
-* Make sure you **whitelist your IP** in API and Forging sections of Shift *config.json* in all servers;
+* You can install this script on your server or **upload it to any web hosting including Phantom**;
+* Make sure you **whitelist all your IPs** in API and Forging sections of Shift *config.json* in all servers;
 * You need to have **fs, http, https, node-cmd, path** installed in npm, for example: `sudo npm install node-cmd`;
 * Make sure to add your new serverport numbers to your firewall. Instructions: [ShiftProject Wiki](https://www.reddit.com/r/ShiftProject/wiki/guides/delegate#wiki_step_seven_.2014_set_up_a_basic_firewall);
 
