@@ -19,10 +19,6 @@ Then you need to edit **config.json** file with all your proper data. You can us
 
 > "t_publicKey" **// Testnet publicKey;**
 
-> "serverip" **// IP of the server where you are installing this software;**
-
-> "serverport" **// It's the port of your server for the Shift Monitor. Must be different from the ports that Shift uses;**
-
 >  "servers" **// It's an array of all the servers you will monitor.**
 
 >  "server1" **// Server number;**
@@ -48,10 +44,19 @@ If you access from a device that you have in your servers whitelist, you will be
 ### Browser notifications are works perfectly with Firefox Desktop and Mobile browsers.
 
 ## Webserver.js
+
+
 If you want use it on your own server you need to have **fs, http, https, node-cmd, path** installed in npm, for example: `sudo npm install node-cmd`;
+
 And make sure to add your new serverport numbers to your firewall. Instructions: [ShiftProject Wiki](https://www.reddit.com/r/ShiftProject/wiki/guides/delegate#wiki_step_seven_.2014_set_up_a_basic_firewall);
 
-You can run **webserver.js** on your server in a background process. You can use **screen**:
+Edit **config.json** file:
+
+> "serverip" **// IP of the server where you are installing this software;**
+
+> "serverport" **// It's the port of your server for the Shift Monitor. Must be different from the ports that Shift uses;**
+
+then run **webserver.js** on your server in a background process. You can use **screen**:
 
 `screen`
 
