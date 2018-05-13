@@ -42,13 +42,15 @@ You need to edit **config.json** file with all your proper data. You can use it 
  
 After you finish and save your changes from **config.json**, 
 
-Run in a background process. You can use **screen**:
+You can run **webserver.js** on your server in a background process. You can use **screen**:
 
 `screen`
 
 `node webserver.js`
 
 **node webserver.js** will start a web server which you can access with http://serverip:serverport/ from a web browser like Firefox.
+
+**Or you can upload files to any web hosting including Phantom.**
 
 If you access from a device that you have in your servers whitelist, you will be able to obtain almost realtime data.
 
