@@ -62,8 +62,9 @@ function initialize() {
         var i=1;
         for (var ss in g_setup.servers) {
             if(!g_setup.servers[ss].testnet) {
+                var url = g_setup.servers[ss].http +'://'+ g_setup.servers[ss].ip +':'+ g_setup.servers[ss].port;
                 var table_row="<tr>"+
-                                "<td id='server"+i+"'>"+ g_setup.servers[ss].name +"</td>"+
+                                "<td id='server"+i+"'><a href='" + url + "'>"+ g_setup.servers[ss].name +"</a></td>"+
                                 "<td id='server"+i+"_height'>undefined</td>"+
                                 "<td id='server"+i+"_consensus'>undefined</td>"+
                                 "<td id='server"+i+"_forging'>undefined</td>"+
@@ -71,7 +72,7 @@ function initialize() {
                 $("#nodeTable").append(table_row);
             }else {
                 var table_row="<tr>"+
-                                "<td id='server"+i+"'>"+ g_setup.servers[ss].name +"</td>"+
+                                "<td id='server"+i+"'><a href='" + url + "'>"+ g_setup.servers[ss].name +"</a></td>"+
                                 "<td id='server"+i+"_height'>undefined</td>"+
                                 "<td id='server"+i+"_consensus'>undefined</td>"+
                                 "<td id='server"+i+"_forging'>undefined</td>"+
@@ -153,7 +154,6 @@ function display_data(){
 function monitor_process(){
         var i=1;
         for (var ss in g_setup.servers) {
-          $("#server"+i).text(g_setup.servers[ss].name);
           get_server_data(i,g_setup.servers[ss].http,g_setup.servers[ss].ip,g_setup.servers[ss].port,g_setup.servers[ss].testnet);
           get_forging_status(i,g_setup.servers[ss].http,g_setup.servers[ss].ip,g_setup.servers[ss].port,g_setup.servers[ss].testnet);
           i++;
