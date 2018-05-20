@@ -224,7 +224,7 @@ function get_last_block(http,ip,port,net) {
             } 
 
             if(minutes < 45 ){
-                $("." + net + "_lastBlock").removeClass("usual").addClass("forgingTime");
+                $("." + net + "_lastBlock").removeClass("usual").removeClass("red").addClass("forgingTime");
             }
             if(minutes > 45 ){
                 $("." + net + "_lastBlock").removeClass("forgingTime").addClass("usual");
