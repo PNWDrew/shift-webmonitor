@@ -2,17 +2,7 @@
   "m_name": "mx",
   "t_name": "m",
   "m_publicKey": "a755f6838f2bf5e593f2e8069ad91927dfd1659e1ba4d80c0c6adadeb553620c",
-  "t_publicKey": "8668b26c0bb1a40eaccdc1a22db17a79ddab35feb8d1eb2b75765cda902b0c1e",
-  "serverip": "111.111.111.111",
-  "serverport": "9100",
-  "ssl": {
-    "enabled": false,
-    "options": {
-    "port": "9191",
-    "key": "/etc/letsencrypt/live/shifter.com/privkey.pem",
-    "cert": "/etc/letsencrypt/live/shifter.com/fullchain.pem"
-     }
-  },	
+  "t_publicKey": "8668b26c0bb1a40eaccdc1a22db17a79ddab35feb8d1eb2b75765cda902b0c1e",	
   "servers": {
     "server1": {
       "name": "tMaster",
