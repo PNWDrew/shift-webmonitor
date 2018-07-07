@@ -46,8 +46,6 @@ If you access from a device that you have in your servers whitelist, you will be
 ## Chromium based browsers
 For using with Chromium based browsers you should use a secure **https** connection for recieving notifications.
 
-<br>
-
 Or you can start your Chromium based browser with this key:
 
 ```
