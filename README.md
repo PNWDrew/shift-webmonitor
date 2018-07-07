@@ -37,7 +37,7 @@ Then you need to edit **config.json** file with all your proper data. You can us
  
 After you finish and save your changes from **config.json**, 
 
-**you can upload all files (except webserver.js) to any web hosting including Phantom.**
+**you can upload all files to any web hosting including Phantom.**
 
 If you access from a device that you have in your servers whitelist, you will be able to obtain almost realtime data.
 
