@@ -37,49 +37,14 @@ Then you need to edit **config.json** file with all your proper data. You can us
  
 After you finish and save your changes from **config.json**, 
 
-**you can upload all files (except webserver.js) to any web hosting including Phantom.**
+**you can upload all files to any web hosting including Phantom.**
 
 If you access from a device that you have in your servers whitelist, you will be able to obtain almost realtime data.
 
 ### Browser notifications are works perfectly with Firefox Desktop and Mobile browsers.
 
-## Webserver.js
-
-
-If you want use it on your own server you need to have **fs, http, https, node-cmd, path** installed in npm, for example: `sudo npm install node-cmd`;
-
-And make sure to add your new serverport numbers to your firewall. Instructions: [ShiftProject Wiki](https://www.reddit.com/r/ShiftProject/wiki/guides/delegate#wiki_step_seven_.2014_set_up_a_basic_firewall);
-
-Edit **config.json** file:
-
-> "serverip" **// IP of the server where you are installing this software;**
-
-> "serverport" **// It's the port of your server for the Shift Monitor. Must be different from the ports that Shift uses;**
-
-then run **webserver.js** on your server in a background process. You can use **screen**:
-
-`screen`
-
-`node webserver.js`
-
-**node webserver.js** will start a web server which you can access with http://serverip:serverport/ from a web browser like Firefox.
-
 ## Chromium based browsers
-For using with Chromium based browsers you should use a secure **https** connection for recieving notifications. You can enabled it in **config.json**:
-
->  "ssl": {
-
->  "enabled" **// 'true' for https support;**
-
->  "options": {
-
->  "port" **// port for https connection;**
- 
->  "key" **// your SSL private key;**
-  
->  "cert" **// your SSL certificate;**
-
-<br>
+For using with Chromium based browsers you should use a secure **https** connection for recieving notifications.
 
 Or you can start your Chromium based browser with this key:
 
