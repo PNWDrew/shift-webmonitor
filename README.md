@@ -1,4 +1,4 @@
-# Shift Webmonitor ( Web Version / [Server Version](https://github.com/MxShift/shift-monitor) )
+# Shift Webmonitor ( Web Version / [Server Version](https://https://github.com/PNWDrew/shift-monitor.git) )
 Tool to watch your servers status. Height, Consensus and Forging status. Next turn and last forged block time.
 
 ## Requisites
